@@ -13,14 +13,15 @@ class DataLoader:
             for row in reader:
                 docs.append({
                     "text": row.get("text", ""),
-                    "TweetID": ["TweetID"],
-                    "Antisemitic": ["label_antisemitic"],
-                    "CreateDate": ["timestamp"],
+                    "TweetID": row.get("TweetID", ""),
+                    "Antisemitic": row.get("Antisemitic", 0),
+                    "CreateDate": row.get("timestamp", ""),
                     "sentiment_label": None,
                     "sentiment_score": None,
                     "weapons": [],
                 })
             return docs
+
 
 if __name__ == "__main__":
     pass
