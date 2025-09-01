@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9201:9201"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  app:
+    build: .
+    container_name: malicious-text-app
+    depends_on:
+      - elasticsearch
+    environment:
+      - ES_URL=http://elasticsearch:9201
+      - INDEX_NAME=iranian_texts
+      - WEAPONS_FILE=/app/data/weapons.txt
+      - TWEETS_FILE=/app/data/tweets.csv
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+
+volumes:
+  es_data:

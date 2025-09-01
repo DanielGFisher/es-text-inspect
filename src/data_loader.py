@@ -21,7 +21,3 @@ class DataLoader:
                     "weapons": [],
                 })
             return docs
-
-
-if __name__ == "__main__":
-    pass
